@@ -1,7 +1,5 @@
 import stripe from "stripe";
 
-//const stripeSecretKey="sk_test_51OA1bCJc1osW37zP29V2LhUcBtHeigSlN0PaetioHKak6A7vvj2gmE49zIXgrSHwYm6V844crlwxvtlwTnGjTkqU00cki5SZ54";
-
 export default class Api {
 	constructor({honoContext, paymentModule, stripeSecretKey}) {
 		this.c=honoContext;
