@@ -1,0 +1,16 @@
+{
+  "name": "katnip-payment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "browser": "browser.jsx",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@stripe/stripe-js": "^2.2.2",
+    "fullstack-utils": "^1.0.5",
+    "stripe": "^14.10.0",
+    "url-join": "^5.0.0",
+    "katnip-hono-isoq": "^1.0.8"
+  },
+  "keywords": "katnip-cli"
+}
