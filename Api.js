@@ -1,10 +1,11 @@
 import stripe from "stripe";
+import {HookEvent} from "katnip";
 
 export default class Api {
-	constructor({honoContext, paymentModule, stripeSecretKey}) {
-		this.c=honoContext;
-		this.paymentModule=paymentModule;
-		this.stripeSecretKey=stripeSecretKey;
+	constructor(c, launchEvent) {
+		this.c=c;
+		this.launchEvent=launchEvent;
+		this.stripeSecretKey=this.launchEvent.stripeSecretKey;
 	}
 
 	async confirmPayment(order) {
@@ -17,8 +18,14 @@ export default class Api {
 
 		order.transaction_id=intent.id;
 
-		let paymentCallback=this.paymentModule.default;
-		await paymentCallback(order,this.c);
+		let ev=new HookEvent("payment",{
+			honoContext: this.c,
+			request: this.c.req.raw,
+			get: (key)=>this.c.get(key), 
+			order: order,
+		});
+
+		await this.launchEvent.hookRunner.emit(ev);
 		return order;
 	}
 

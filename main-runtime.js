@@ -3,14 +3,11 @@ import Api from "./Api.js";
 
 async function onHonoMiddlewares(hookEvent) {
 	console.log("Installing payment middleware...");
+	//console.log(hookEvent);
 
-	let paymentModule=hookEvent.workerModules.katnipPaymentHandler;
+	//let paymentModule=hookEvent.workerModules.katnipPaymentHandler;
 
-	hookEvent.app.use("/payment",quickRpc(c=>new Api({
-		honoContext: c, 
-		paymentModule: paymentModule,
-		stripeSecretKey: hookEvent.stripeSecretKey
-	})));
+	hookEvent.app.use("/payment",quickRpc(c=>new Api(c,hookEvent)));
 }
 
 async function onClientProps(hookEvent) {

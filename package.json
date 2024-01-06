@@ -1,6 +1,6 @@
 {
   "name": "katnip-payment",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main-cli.js",
   "browser": "browser.jsx",
   "license": "MIT",

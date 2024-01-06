@@ -11,11 +11,8 @@ async function onClientWrappers(event) {
 }
 
 async function onWorkerModules(hookEvent) {
-	let paymentModulePath=path.join(process.cwd(),hookEvent.onPayment);
-
 	console.log("adding payment worker module...");
 	hookEvent.workerModules.katnipPayment="katnip-payment/main-runtime.js";
-	hookEvent.workerModules.katnipPaymentHandler=paymentModulePath;
 }
 
 export function registerHooks(hookRunner) {
@@ -28,8 +25,7 @@ export function registerHooks(hookRunner) {
 		description: "Check payment settings.",
 		options: {
 			"stripePublicKey": "The Stripe public key.",
-			"stripeSecretKey": "The Stripe secret key.",
-			"onPayment": "JS module to call on completed payment."
+			"stripeSecretKey": "The Stripe secret key."
 		}
 	});
 }
