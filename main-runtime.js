@@ -14,8 +14,6 @@ async function onHonoMiddlewares(hookEvent) {
 }
 
 async function onClientProps(hookEvent) {
-	console.log("on client props...");
-
 	hookEvent.props.stripePublicKey=hookEvent.stripePublicKey;
 }
 
