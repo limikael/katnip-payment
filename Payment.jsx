@@ -97,7 +97,7 @@ class Payment extends EventTarget{
 		try {
 			this.setBusy(true);
 			this.elements.update({
-				amount: order.amount*100,
+				amount: Math.round(order.amount*100),
 				currency: order.currency
 			});
 

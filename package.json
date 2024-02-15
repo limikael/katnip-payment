@@ -1,7 +1,7 @@
 {
   "name": "katnip-payment",
   "scripts": {},
-  "version": "1.0.6",
+  "version": "1.0.9",
   "main": "main-cli.js",
   "browser": "browser.jsx",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "fullstack-utils": "^1.0.8",
     "stripe": "^14.10.0",
     "url-join": "^5.0.0",
-    "katnip-hono-isoq": "^1.0.14"
+    "katnip-hono-isoq": "^1.0.16"
   },
   "keywords": "katnip-cli"
 }

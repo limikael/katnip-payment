@@ -33,7 +33,7 @@ export default class Api {
 		let stripeClient=stripe(this.stripeSecretKey);
 		let intent=await stripeClient.paymentIntents.create({
 			confirm: true,
-			amount: order.amount*100,
+			amount: Math.round(order.amount*100),
 			currency: order.currency,
 			// In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
 			automatic_payment_methods: {enabled: true},
