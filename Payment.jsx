@@ -2,7 +2,8 @@ import {useState, useEffect, useRef, createContext, useContext} from "react";
 import {useIsoContext, urlGetParams} from "isoq";
 import {useEventUpdate} from "./react-util.jsx";
 import urlJoin from "url-join";
-import {createQuickRpcProxy} from "fullstack-utils/quick-rpc";
+import {createRpcProxy} from "fullstack-rpc/client";
+//import {createQuickRpcProxy} from "fullstack-utils/quick-rpc";
 
 export const PaymentContext=createContext();
 
@@ -114,6 +115,7 @@ class Payment extends EventTarget{
 
 			order.paymentMethodId=methodResult.paymentMethod.id;
 			order.returnUrl=this.returnUrl;
+			console.log("submit payment...");
 			let submitHandlerResult=await this.rpc.submitPayment(order);
 			console.log(submitHandlerResult);
 			order={...order,...submitHandlerResult};
@@ -195,7 +197,7 @@ export function usePayment(options={}) {
 	let u=new URL(iso.getUrl());
 	options.returnUrl=urlJoin(u.origin,u.pathname);
 	options.stripePromise=paymentContext.stripePromise;
-	options.rpc=createQuickRpcProxy({
+	options.rpc=createRpcProxy({
 		fetch: iso.fetch,
 		url: "/payment"
 	});

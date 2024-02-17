@@ -7,6 +7,7 @@ export default function({stripePublicKey, children}) {
 	if (!stripePublicKey)
 		throw new Error("Stripe public key is not set");
 
+	//console.log("katnip payment client init");
 	//console.log("Stripe public key: "+stripePublicKey);
 
 	let iso=useIsoContext();
