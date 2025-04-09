@@ -94,6 +94,7 @@ class Payment extends EventTarget{
 		this.setBusy(false);
 	}
 
+	// Order must have amount and currency.
 	async submitOrder(order) {
 		try {
 			this.setBusy(true);

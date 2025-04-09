@@ -6,15 +6,15 @@
   "type": "module",
   "dependencies": {
     "@stripe/stripe-js": "^2.2.2",
-    "fullstack-rpc": "^1.0.1",
+    "fullstack-rpc": "^1.0.3",
     "stripe": "^14.10.0",
     "url-join": "^5.0.0",
-    "katnip": "^3.0.13"
+    "katnip": "^4.0.6"
   },
   "exports": {
-    "server": "./katnip-payment-server.js",
-    "isoq-wrapper": "./katnip-payment-isoq-wrapper.jsx",
-    "default": "./katnip-payment-main.jsx"
+    "./katnip-server-hooks": "./katnip-payment-server.js",
+    "./isomain": "./katnip-payment-isomain.jsx",
+    ".": "./katnip-payment-main.jsx"
   },
   "keywords": [
     "katnip-plugin"

@@ -3,7 +3,7 @@ import {useIsoContext} from "isoq";
 import {loadStripe} from "@stripe/stripe-js";
 import {useRef} from "react";
 
-export default function({stripePublicKey, children}) {
+export function Wrapper({stripePublicKey, children}) {
 	if (!stripePublicKey)
 		throw new Error("Stripe public key is not set");
 
