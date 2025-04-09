@@ -116,9 +116,9 @@ class Payment extends EventTarget{
 
 			order.paymentMethodId=methodResult.paymentMethod.id;
 			order.returnUrl=this.returnUrl;
-			console.log("submit payment...");
+			//console.log("submit payment...");
 			let submitHandlerResult=await this.rpc.submitPayment(order);
-			console.log(submitHandlerResult);
+			//console.log(submitHandlerResult);
 			order={...order,...submitHandlerResult};
 			this.setOrder(order);
 			await this.checkPaymentStatus();

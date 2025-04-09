@@ -1,4 +1,5 @@
 import stripe from "stripe";
+import {HookEvent} from "katnip";
 
 export default class Api {
 	constructor(ev) {
@@ -7,7 +8,7 @@ export default class Api {
 	}
 
 	async confirmPayment(order) {
-		console.log("confirming payment intent: "+order.paymentIntentId);
+		//console.log("confirming payment intent: "+order.paymentIntentId);
 
 		let stripeClient=stripe(this.stripeSecretKey);
 		let intent=await stripeClient.paymentIntents.retrieve(order.paymentIntentId);
@@ -16,7 +17,12 @@ export default class Api {
 
 		order.transaction_id=intent.id;
 
-		await this.ev.hookRunner.emit("payment",order,this.ev);
+		let paymentEvent=new HookEvent("payment",{
+			...this.ev,
+			order: order
+		});
+
+		await this.ev.target.dispatch(paymentEvent);
 		return order;
 	}
 
@@ -37,7 +43,7 @@ export default class Api {
 			        online: {
 			            //ip_address: req.ip,
 			            ip_address: "127.0.0.1",
-			            user_agent: this.ev.req.headers.get("user-agent"),
+			            user_agent: this.ev.request.headers.get("user-agent"),
 			        },
 			    },
 		  	},
