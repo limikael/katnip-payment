@@ -189,25 +189,69 @@ class Payment extends EventTarget{
 	}
 }
 
+class MockPayment extends EventTarget {
+	constructor({onError, onSuccess, rpc}) {
+		super();
+		this.mockPayment=true;
+		this.onError=onError;
+		this.onSuccess=onSuccess;
+		this.rpc=rpc;
+	}
+
+	initRef() {}
+
+	isReady() {
+		return true;
+	}
+
+	isBusy() {
+		return false;
+	}
+
+	async submitOrder(order) {
+		try {
+			let result=await this.rpc.mockPayment(order);
+			this.onSuccess(result);
+		}
+
+		catch (e) {
+			console.log("mock error payment error",e);
+			this.onError(e);
+		}
+	}
+}
+
 export function usePayment(options={}) {
 	let iso=useIsoContext();
 	let paymentRef=useRef();
 	let urlParams=urlGetParams(iso.getUrl());
 	let paymentContext=useContext(PaymentContext);
 
-	let u=new URL(iso.getUrl());
-	options.returnUrl=urlJoin(u.origin,u.pathname);
-	options.stripePromise=paymentContext.stripePromise;
-	options.rpc=createRpcProxy({
-		fetch: iso.fetch,
-		url: "/payment"
-	});
+	if (paymentContext.mockPayment) {
+		options.rpc=createRpcProxy({
+			fetch: iso.fetch,
+			url: "/payment"
+		});
 
-	if (urlParams.redirect_status)
-		options.initialBusy=true;
+		if (!paymentRef.current)
+			paymentRef.current=new MockPayment(options);
+	}
 
-	if (!paymentRef.current)
-		paymentRef.current=new Payment(options);
+	else {
+		let u=new URL(iso.getUrl());
+		options.returnUrl=urlJoin(u.origin,u.pathname);
+		options.stripePromise=paymentContext.stripePromise;
+		options.rpc=createRpcProxy({
+			fetch: iso.fetch,
+			url: "/payment"
+		});
+
+		if (urlParams.redirect_status)
+			options.initialBusy=true;
+
+		if (!paymentRef.current)
+			paymentRef.current=new Payment(options);
+	}
 
 	useEventUpdate(paymentRef.current,"change");
 	return paymentRef.current;
@@ -223,6 +267,14 @@ export function PaymentForm({payment}) {
 
 		payment.initRef(elementRef);
 	},[]);
+
+	if (payment.mockPayment) {
+		return (
+			<div ref={elementRef} style="background-color: #0000ff; padding: 16px; color: #ffffff; text-align: center">
+				MOCKED PAYMENT
+			</div>
+		)
+	}
 
 	return (
 		<div ref={elementRef}/>

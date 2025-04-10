@@ -7,6 +7,21 @@ export default class Api {
 		this.stripeSecretKey=ev.options.stripeSecretKey;
 	}
 
+	async mockPayment(order) {
+		if (!this.ev.options.mockPayment)
+			throw new Error("Mock payments not enabled");
+
+		let paymentEvent=new HookEvent("payment",{
+			...this.ev,
+			order: order
+		});
+
+		order.transaction_id="MOCK-"+crypto.randomUUID();
+
+		await this.ev.target.dispatch(paymentEvent);
+		return order;
+	}
+
 	async confirmPayment(order) {
 		//console.log("confirming payment intent: "+order.paymentIntentId);
 

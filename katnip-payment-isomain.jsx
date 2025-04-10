@@ -3,7 +3,7 @@ import {useIsoContext} from "isoq";
 import {loadStripe} from "@stripe/stripe-js";
 import {useRef} from "react";
 
-export function Wrapper({stripePublicKey, children}) {
+export function Wrapper({stripePublicKey, mockPayment, children}) {
 	if (!stripePublicKey)
 		throw new Error("Stripe public key is not set");
 
@@ -16,8 +16,13 @@ export function Wrapper({stripePublicKey, children}) {
 	if (!ref.current) {
 		ref.current={};
 
-		if (!iso.isSsr())
+		if (mockPayment) {
+			ref.current.mockPayment=true;
+		}
+
+		else {
 			ref.current.stripePromise=loadStripe(stripePublicKey);
+		}
 	}
 
 	return (

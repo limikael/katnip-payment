@@ -3,6 +3,7 @@ import Api from "./Api.js";
 
 export function clientProps(ev) {
 	ev.props.stripePublicKey=ev.options.stripePublicKey;
+	ev.props.mockPayment=ev.options.mockPayment;
 }
 
 export function start(ev) {
