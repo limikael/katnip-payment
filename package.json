@@ -1,7 +1,7 @@
 {
   "name": "katnip-payment",
   "scripts": {},
-  "version": "4.0.1",
+  "version": "4.0.3",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -9,7 +9,7 @@
     "fullstack-rpc": "^1.0.3",
     "stripe": "^14.10.0",
     "url-join": "^5.0.0",
-    "katnip": "^4.0.6"
+    "katnip": "^4.0.9"
   },
   "exports": {
     "./katnip-server-hooks": "./katnip-payment-server.js",
