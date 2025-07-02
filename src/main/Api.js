@@ -1,24 +1,26 @@
 import stripe from "stripe";
-import {HookEvent} from "katnip";
 
 export default class Api {
 	constructor(ev) {
 		this.ev=ev;
-		this.stripeSecretKey=ev.options.stripeSecretKey;
+		this.stripeSecretKey=ev.env.STRIPE_SECRET_KEY;
 	}
 
 	async mockPayment(order) {
-		if (!this.ev.options.mockPayment)
+		if (!this.ev.env.MOCK_PAYMENT)
 			throw new Error("Mock payments not enabled");
-
-		let paymentEvent=new HookEvent("payment",{
-			...this.ev,
-			order: order
-		});
 
 		order.transaction_id="MOCK-"+crypto.randomUUID();
 
-		await this.ev.target.dispatch(paymentEvent);
+		let paymentEvent={
+			...this.ev,
+			order
+		};
+
+		for (let mod of this.ev.app.modules)
+			if (mod.onPayment)
+				await mod.onPayment(paymentEvent);
+
 		return order;
 	}
 
@@ -32,12 +34,15 @@ export default class Api {
 
 		order.transaction_id=intent.id;
 
-		let paymentEvent=new HookEvent("payment",{
+		let paymentEvent={
 			...this.ev,
 			order: order
-		});
+		};
 
-		await this.ev.target.dispatch(paymentEvent);
+		for (let mod of this.ev.app.modules)
+			if (mod.onPayment)
+				await mod.onPayment(paymentEvent);
+
 		return order;
 	}
 

@@ -1,0 +1,18 @@
+{
+  "server": "src/main/server.js",
+  "client": "src/main/index.jsx",
+  "env": {
+    "STRIPE_PUBLISHABLE_KEY": "pk_test_51OA1bCJc1osW37zPeGwY2nsA4mLKUCajdRToJuKcssxZgsSqhq6ybcaPyl9cpLhkhPSV1kn9YBn8x9ROsJD1NXCT009nz131qG",
+    "STRIPE_SECRET_KEY": "sk_test_51OA1bCJc1osW37zP29V2LhUcBtHeigSlN0PaetioHKak6A7vvj2gmE49zIXgrSHwYm6V844crlwxvtlwTnGjTkqU00cki5SZ54",
+//    "MOCK_PAYMENT": true
+  },
+  "services": {
+    "DB": {
+      "type": "better-sqlite3",
+      "filename": "quickmin.db",
+      "if": {
+        "platform": "node"
+      }
+    }
+  }
+}

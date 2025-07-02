@@ -1,0 +1,16 @@
+{
+  "name": "example-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "katnip serve",
+    "build": "katnip build",
+    "preinstall": "echo 'Don't install here, install in the root.' >&2; exit 1",
+    "install": "echo 'Don't install here, install in the root.' >&2; exit 1"
+  },
+  "dependencies": {
+    "katnip": "^5.0.5",
+    "better-sqlite3": "^12.2.0",
+    "katnip-payment": "^5.0.0"
+  }
+}

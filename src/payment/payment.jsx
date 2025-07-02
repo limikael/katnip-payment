@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef, createContext, useContext} from "react";
 import {useIsoContext, urlGetParams} from "isoq";
-import {useEventUpdate} from "./react-util.jsx";
+import {useEventUpdate} from "../utils/react-util.jsx";
 import urlJoin from "url-join";
 import {createRpcProxy} from "fullstack-rpc/client";
 //import {createQuickRpcProxy} from "fullstack-utils/quick-rpc";

@@ -1,0 +1,11 @@
+jwtSecret: "changeme"
+adminUser: "admin"
+adminPass: "admin"
+apiPath: "admin"
+
+collections:
+  pages:
+    policies:
+    - roles: admin
+    fields:
+      <Text id="content"/>
