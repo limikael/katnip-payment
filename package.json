@@ -1,7 +1,7 @@
 {
   "name": "katnip-payment",
   "scripts": {},
-  "version": "5.0.1",
+  "version": "5.0.2",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -12,11 +12,11 @@
   },
   "devDependencies": {
     "better-sqlite3": "^12.2.0",
-    "katnip": "^5.0.0",
+    "katnip": "^5.0.9",
     "katnip-payment": "link:."
   },
   "peerDependencies": {
-    "katnip": "^5.0.0"
+    "katnip": "^5.0.9"
   },
   "exports": {
     "./katnip-build": "./src/exports/katnip-build.js",
@@ -24,8 +24,5 @@
   },
   "keywords": [
     "katnip-plugin"
-  ],
-  "publishConfig": {
-    "tag": "next"
-  }
+  ]
 }
