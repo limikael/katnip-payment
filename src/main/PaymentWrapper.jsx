@@ -21,7 +21,8 @@ export default function Wrapper({stripePublishableKey, mockPayment, children}) {
 		}
 
 		else {
-			ref.current.stripePromise=loadStripe(stripePublishableKey);
+			ref.current.loadStripe=loadStripe;
+			ref.current.stripePublishableKey=stripePublishableKey;
 		}
 	}
 

@@ -3,7 +3,7 @@ import {useIsoContext, urlGetParams} from "isoq";
 import {useEventUpdate} from "../utils/react-util.jsx";
 import urlJoin from "url-join";
 import {createRpcProxy} from "fullstack-rpc/client";
-//import {createQuickRpcProxy} from "fullstack-utils/quick-rpc";
+//import {loadStripe} from "@stripe/stripe-js";
 
 export const PaymentContext=createContext();
 
@@ -238,6 +238,9 @@ export function usePayment(options={}) {
 	}
 
 	else {
+		if (!paymentContext.stripePromise)
+			paymentContext.stripePromise=paymentContext.loadStripe(paymentContext.stripePublishableKey);
+
 		let u=new URL(iso.getUrl());
 		options.returnUrl=urlJoin(u.origin,u.pathname);
 		options.stripePromise=paymentContext.stripePromise;
