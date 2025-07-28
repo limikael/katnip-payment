@@ -19,7 +19,8 @@
     "katnip": "^5.0.9"
   },
   "exports": {
-    "./katnip-build": "./src/exports/katnip-build.js",
+    "./katnip-server-hooks": "./src/main/server.js",
+    "./isowrap": "./src/main/PaymentWrapper.jsx",
     ".": "./src/exports/default.jsx"
   },
   "keywords": [

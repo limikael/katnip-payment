@@ -1,13 +1,16 @@
 import {RpcServer} from "fullstack-rpc/server";
 import Api from "./Api.js";
 
-export function onStart({env}) {
-	env.__CLIENT_PROPS.stripePublishableKey=env.STRIPE_PUBLISHABLE_KEY;
-	env.__CLIENT_PROPS.mockPayment=env.MOCK_PAYMENT;
+export async function clientProps(ev) {
+	ev.props.stripePublishableKey=ev.env.STRIPE_PUBLISHABLE_KEY;
+	ev.props.mockPayment=ev.env.MOCK_PAYMENT;
+}
+
+export async function start({env}) {
 	env.paymentRpcServer=new RpcServer("payment");
 }
 
-export function onFetch(ev) {
+export async function fetch(ev) {
 	let {request, env}=ev;
 
 	return env.paymentRpcServer.handleRequest(request,{
