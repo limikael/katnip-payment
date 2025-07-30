@@ -16,7 +16,7 @@
     "katnip-payment": "link:."
   },
   "peerDependencies": {
-    "katnip": "^5.0.9"
+    "katnip": "^6.0.1"
   },
   "exports": {
     "./katnip-server-hooks": "./src/main/server.js",
