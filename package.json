@@ -1,12 +1,12 @@
 {
   "name": "katnip-payment",
   "scripts": {},
-  "version": "5.0.4",
+  "version": "6.0.1",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@stripe/stripe-js": "^2.2.2",
-    "fullstack-rpc": "^1.0.3",
+    "fullstack-rpc": "^1.0.4",
     "stripe": "^14.10.0",
     "url-join": "^5.0.0"
   },
