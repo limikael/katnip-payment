@@ -1,4 +1,5 @@
 import stripe from "stripe";
+import {AsyncEvent} from "katnip";
 
 export default class Api {
 	constructor(ev) {
@@ -12,14 +13,12 @@ export default class Api {
 
 		order.transaction_id="MOCK-"+crypto.randomUUID();
 
-		let paymentEvent={
+		let paymentEvent=new AsyncEvent("payment",{
 			...this.ev,
 			order
-		};
+		});
 
-		for (let mod of this.ev.app.modules)
-			if (mod.onPayment)
-				await mod.onPayment(paymentEvent);
+		await this.ev.target.dispatchEvent(paymentEvent);
 
 		return order;
 	}
@@ -34,14 +33,12 @@ export default class Api {
 
 		order.transaction_id=intent.id;
 
-		let paymentEvent={
+		let paymentEvent=new AsyncEvent("payment",{
 			...this.ev,
-			order: order
-		};
+			order
+		});
 
-		for (let mod of this.ev.app.modules)
-			if (mod.onPayment)
-				await mod.onPayment(paymentEvent);
+		await this.ev.target.dispatchEvent(paymentEvent);
 
 		return order;
 	}
