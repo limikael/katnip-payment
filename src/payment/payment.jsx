@@ -1,9 +1,8 @@
 import {useState, useEffect, useRef, createContext, useContext} from "react";
-import {useIsoContext, urlGetParams} from "isoq";
+import {useIsoContext, urlGetParams, useRouteParams} from "katnip";
 import {useEventUpdate} from "../utils/react-util.jsx";
 import urlJoin from "url-join";
 import {createRpcProxy} from "fullstack-rpc/client";
-//import {loadStripe} from "@stripe/stripe-js";
 
 export const PaymentContext=createContext();
 
@@ -224,7 +223,7 @@ class MockPayment extends EventTarget {
 export function usePayment(options={}) {
 	let iso=useIsoContext();
 	let paymentRef=useRef();
-	let urlParams=urlGetParams(iso.getUrl());
+	let urlParams=useRouteParams();
 	let paymentContext=useContext(PaymentContext);
 
 	if (paymentContext.mockPayment) {
