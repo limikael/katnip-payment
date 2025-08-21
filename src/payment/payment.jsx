@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef, createContext, useContext} from "react";
-import {useIsoContext, urlGetParams, useRouteParams} from "katnip";
+import {useIsoContext, urlGetParams, useRouteParams, useRouteLocation} from "katnip";
 import {useEventUpdate} from "../utils/react-util.jsx";
 import urlJoin from "url-join";
 import {createRpcProxy} from "fullstack-rpc/client";
@@ -225,6 +225,7 @@ export function usePayment(options={}) {
 	let paymentRef=useRef();
 	let urlParams=useRouteParams();
 	let paymentContext=useContext(PaymentContext);
+	let location=useRouteLocation();
 
 	if (paymentContext.mockPayment) {
 		options.rpc=createRpcProxy({
@@ -240,8 +241,8 @@ export function usePayment(options={}) {
 		if (!paymentContext.stripePromise)
 			paymentContext.stripePromise=paymentContext.loadStripe(paymentContext.stripePublishableKey);
 
-		let u=new URL(iso.getUrl());
-		options.returnUrl=urlJoin(u.origin,u.pathname);
+		console.log("location: "+location);
+		options.returnUrl=location;
 		options.stripePromise=paymentContext.stripePromise;
 		options.rpc=createRpcProxy({
 			fetch: iso.fetch,
