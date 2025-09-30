@@ -39,6 +39,10 @@ class Payment extends EventTarget{
 		return this.ready;
 	}
 
+	isEnabled() {
+		return (this.isReady() && !this.isBusy())
+	}
+
 	getOrder() {
 		let orderJson=window.localStorage.getItem(this.localStorageKey);
 		let order=JSON.parse(orderJson);

@@ -1,5 +1,6 @@
 import stripe from "stripe";
 import {AsyncEvent} from "katnip";
+import {stripeObtainCustomerId} from "../utils/stripe-util.js";
 
 export default class Api {
 	constructor(ev) {
@@ -32,6 +33,7 @@ export default class Api {
 			throw new Error("Payment intent status is not succeeded");
 
 		order.transaction_id=intent.id;
+		order.paymentStatus=intent.status;
 
 		let paymentEvent=new AsyncEvent("payment",{
 			...this.ev,
@@ -45,7 +47,19 @@ export default class Api {
 
 	async submitPayment(order) {
 		let stripeClient=stripe(this.stripeSecretKey);
+
+		let user=await this.ev.env.quickminServer.getUserByRequest(this.ev.request);
+		if (!user || !user.email)
+			throw new Error("No user, or no user.email");
+
+		let customerId=await stripeObtainCustomerId(stripeClient,{
+			email: user.email,
+			name: user.name
+		});
+
 		let intent=await stripeClient.paymentIntents.create({
+			setup_future_usage: 'off_session',
+			customer: customerId,
 			confirm: true,
 			amount: Math.round(order.amount*100),
 			currency: order.currency,
@@ -70,6 +84,7 @@ export default class Api {
 			paymentIntentId: intent.id,
 			clientSecret: intent.client_secret,
 			paymentStatus: intent.status,
+			customerId: customerId
 		}
 	}
 }
