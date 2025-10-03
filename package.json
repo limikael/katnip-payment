@@ -2,7 +2,7 @@
   "name": "katnip-payment",
   "description": "Accept payments in your katnip project.",
   "scripts": {},
-  "version": "6.0.5",
+  "version": "6.0.6",
   "license": "MIT",
   "type": "module",
   "dependencies": {
