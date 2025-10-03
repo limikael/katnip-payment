@@ -1,5 +1,6 @@
 {
   "name": "katnip-payment",
+  "description": "Accept payments in your katnip project.",
   "scripts": {},
   "version": "6.0.5",
   "license": "MIT",
